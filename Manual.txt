@@ -1,0 +1,97 @@
+Part A — Concepts (plain language)
+1) What is an operator?
+
+An operator is a symbol that tells the computer to do something with values. Examples:
+
++ adds numbers.
+
+- subtracts.
+
+* multiplies.
+
+/ divides.
+
+These are arithmetic operators. There are other groups:
+
+Logical operators: && (AND), || (OR), ! (NOT). They produce true/false.
+
+Bitwise operators: work on the bits inside numbers. These are crucial in firmware.
+
+2) Bits and bitwise operators — why they matter in firmware
+
+Everything in firmware is ultimately bits. Hardware registers are just collections of bits. Typical bitwise operators:
+
+& (AND): 1 & 1 = 1, else 0. Use to mask bits (keep some bits, zero others).
+
+| (OR): 1 | 0 = 1. Use to set bits.
+
+^ (XOR): 1 ^ 1 = 0, 1 ^ 0 = 1. Use to toggle bits or for parity.
+
+~ (NOT): flips all bits.
+
+<< (left shift): moves bits left, filling with zeros on the right. Equivalent to multiply by powers of two for unsigned ints.
+
+>> (right shift): moves bits right. For unsigned types it's logical shift (fills with zeros). For signed types it's implementation-defined whether sign bit is preserved; therefore use unsigned for shifting.
+
+Why do firmware engineers use bitwise ops? To control or read specific bits in hardware registers: set an enable bit, clear an interrupt flag, read a status bit, etc.
+
+3) Common idioms (patterns)
+
+Set bit n: reg |= (1U << n);
+1U << n creates a mask with only bit n set. OR-ing sets that bit in reg.
+
+Clear bit n: reg &= ~(1U << n);
+~(1U << n) is a mask with all bits 1 except bit n. AND-ing clears bit n.
+
+Toggle bit n: reg ^= (1U << n);
+XOR flips the bit.
+
+Test bit n: (reg & (1U << n)) != 0 or (reg >> n) & 1U.
+
+Important: use 1U (unsigned) to avoid signed-shift issues.
+
+4) Masking & fields
+
+Registers often contain fields (multi-bit values) at specific positions. Example: bits [11:8] — a 4-bit field at position 8.
+
+Read field: (reg >> pos) & ((1 << width) - 1)
+
+Write field: reg = (reg & ~(mask << pos)) | ((value & mask) << pos)
+Steps: clear existing field bits, then set new value masked to fit the width.
+
+5) Packing & unpacking bytes
+
+When sending data on buses or building words, you often combine bytes into a 32-bit value:
+
+Pack four bytes into a uint32_t: put MSB in the top 8 bits, etc.
+
+Unpack: extract each byte by shifting and masking.
+
+6) Endianness
+
+Endianness is byte order in memory:
+
+Little-endian: least-significant byte stored at lowest address (x86, ARM little).
+
+Big-endian: most-significant byte at lowest address.
+
+You can detect endianness by inspecting the first byte of a multi-byte number in memory.
+
+You may need to swap byte order when sending or receiving data with other systems.
+
+7) Bit reversal
+
+Sometimes protocols require the bits reversed (mirror order). You can write a simple loop that checks each bit and writes it to the reversed position, or use efficient fixed-step swaps.
+
+8) volatile and atomicity
+
+volatile tells the compiler “this variable can change by outside forces (hardware, ISR); do not optimize away reads/writes”.
+Important: volatile does not make an operation atomic. If you must change multiple bits safely while an interrupt could also change them, disable interrupts (or use atomic operations) during the update.
+
+9) constexpr, inline, templates
+
+constexpr => computed at compile-time (no runtime cost).
+
+inline => suggests function inlining (avoid function call overhead).
+
+Templates let you write code that works for many constants (e.g., read_field_t<pos,width>(reg)).
