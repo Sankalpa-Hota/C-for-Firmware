@@ -1,6 +1,6 @@
 /*
 ===============================================================================
-File: 04_control_flow_and_loops.cpp
+File: 03_control_flow_and_loops.cpp
 Purpose: Teach control flow and loops with firmware-style examples (line-by-line)
 Author: Sankalpa Hota
 How to compile:
