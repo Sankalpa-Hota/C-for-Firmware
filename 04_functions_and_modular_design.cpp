@@ -4,7 +4,7 @@ File: 04_functions_and_modular_design.cpp
 Purpose: Demonstrate functions, modular design, and parameter passing
 Author: Sankalpa Hota
 How to compile:
-  g++ 05_functions_and_modular_design.cpp -o functions_demo
+  g++ 04_functions_and_modular_design.cpp -o functions_demo
   ./functions_demo
 ===============================================================================
 */
