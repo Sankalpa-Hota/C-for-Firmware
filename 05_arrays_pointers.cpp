@@ -1,6 +1,6 @@
 /*
 ===============================================================================
-File: 06_arrays_pointers.cpp
+File: 05_arrays_pointers.cpp
 Purpose: Demonstrate arrays, pointers, pointer arithmetic, 
          and memory-mapped register simulation in C++
 Author: Sankalpa Hota
