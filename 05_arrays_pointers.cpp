@@ -5,7 +5,7 @@ Purpose: Demonstrate arrays, pointers, pointer arithmetic,
          and memory-mapped register simulation in C++
 Author: Sankalpa Hota
 How to compile:
-  g++ 06_arrays_pointers.cpp -o arrays_pointers_demo
+  g++ 05_arrays_pointers.cpp -o arrays_pointers_demo
   ./arrays_pointers_demo
 ===============================================================================
 */
