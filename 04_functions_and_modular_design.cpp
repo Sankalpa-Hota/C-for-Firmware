@@ -1,6 +1,6 @@
 /*
 ===============================================================================
-File: 05_functions_and_modular_design.cpp
+File: 04_functions_and_modular_design.cpp
 Purpose: Demonstrate functions, modular design, and parameter passing
 Author: Sankalpa Hota
 How to compile:
