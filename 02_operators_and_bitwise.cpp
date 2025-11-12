@@ -1,6 +1,6 @@
 /*
 ===============================================================================
-MODULE 03A: BITWISE FIELD READ/WRITE (Solutions + Explanation)
+MODULE 02: BITWISE FIELD READ/WRITE (Solutions + Explanation)
 Author  : Sankalpa Hota
 Purpose : Demonstrate how firmware reads/writes specific bits in registers
 ===============================================================================
